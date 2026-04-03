@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>Agasobanuye Store | Premium Movie Streaming</title>
+<!-- Plyr CSS for video player -->
+<link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
+<!-- Font Awesome 6 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+    min-height: 100vh;
+    color: #e0e0e0;
+    background-color: #0a0a0a;
+    text-align: center;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: #000000;
+    border-bottom: 1px solid #e50914;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.logo-icon {
+    background: linear-gradient(135deg, #e50914 0%, #b00710 100%);
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(229, 9, 20, 0.4);
+}
+
+.logo-icon i {
+    font-size: 24px;
+    color: white;
+}
+
+.logo-text {
+    background: linear-gradient(135deg, #ffffff 0%, #e50914 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 800;
+}
+
+.logo-sub {
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: #e50914;
+    margin-top: -4px;
+}
+
+nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+}
+
+.nav-link {
+    margin: 0 6px;
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: 500;
+    transition: 0.2s;
+    padding: 8px 14px;
+    border-radius: 30px;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    font-family: inherit;
+}
+
+.nav-link i {
+    font-size: 14px;
+}
+
+.nav-link:hover {
+    color: #e50914;
+    background: rgba(229, 9, 20, 0.1);
+}
+
+.nav-link.active {
+    background: rgba(229, 9, 20, 0.2);
+    color: #e50914;
+    border-bottom: 2px solid #e50914;
+}
+
+#loginNavBtn {
+    background: linear-gradient(135deg, #e50914, #b00710);
+    color: white;
+    padding: 8px 20px;
+    border-radius: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+}
+
+.user-avatar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #1a1a1a;
+    padding: 6px 16px;
+    border-radius: 40px;
+}
+
+.user-avatar i { color: #e50914; }
+.logout-btn { background: #333; border: none; padding: 6px 12px; border-radius: 30px; color: white; margin-left: 8px; cursor: pointer; }
+
+.search-box {
+    margin: 20px auto 0 auto;
+    max-width: 420px;
+    padding: 0 15px;
+    position: relative;
+}
+
+.search-box i {
+    position: absolute;
+    left: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #666;
+}
+
+.search-box input {
+    padding: 12px 20px 12px 45px;
+    border: none;
+    border-radius: 50px;
+    width: 100%;
+    background-color: #1f1f1f;
+    color: white;
+    border: 1px solid #333;
+}
+
+.search-box input:focus {
+    background-color: #2a2a2a;
+    box-shadow: 0 0 0 2px #e50914;
+    outline: none;
+}
+
+.hero {
+    height: 380px;
+    background: linear-gradient(135deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.7) 100%), url('https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=2070') center/cover no-repeat;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 40px;
+    margin: 20px;
+    border-radius: 24px;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero button {
+    position: relative;
+    z-index: 2;
+    padding: 14px 32px;
+    background: linear-gradient(135deg, #e50914, #b00710);
+    border: none;
+    border-radius: 50px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.big-player-section {
+    display: none;
+    margin: 20px 30px;
+    background: #000000;
+    border-radius: 24px;
+    overflow: hidden;
+    border: 1px solid #333;
+}
+
+.player-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 25px;
+    background: #111;
+    border-bottom: 1px solid #e50914;
+}
+
+.close-player-btn {
+    background: #333;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 30px;
+    color: white;
+    cursor: pointer;
+}
+
+.video-container { background: black; }
+video { width: 100%; height: auto; min-height: 55vh; display: block; }
+
+.player-actions {
+    display: flex;
+    gap: 20px;
+    padding: 20px 25px;
+    background: #0f0f0f;
+    flex-wrap: wrap;
+}
+
+.action-btn {
+    background: #e50914;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 40px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.movie-info { padding: 0 25px 20px 25px; text-align: left; color: #ccc; }
+
+/* Home Page Sections */
+.home-section {
+    padding: 20px 30px;
+    text-align: left;
+}
+
+.home-section h2 {
+    border-left: 4px solid #e50914;
+    padding-left: 18px;
+    margin-bottom: 25px;
+    font-weight: 700;
+    color: #fff;
+    font-size: 1.6rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.home-section h2 i { color: #e50914; }
+
+.movies-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+    gap: 28px;
+}
+
+/* Single container view for Movies/Categories/Translator pages */
+.single-container {
+    padding: 20px 30px;
+}
+
+.single-container h2 {
+    border-left: 4px solid #e50914;
+    padding-left: 18px;
+    margin-bottom: 25px;
+    color: #fff;
+    font-size: 1.6rem;
+}
+
+.card {
+    background: #151515;
+    padding: 12px;
+    border-radius: 16px;
+    transition: 0.3s ease;
+    cursor: pointer;
+    border: 1px solid #252525;
+    text-align: center;
+}
+
+.card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+    border-color: #e50914;
+}
+
+.card img {
+    width: 100%;
+    border-radius: 12px;
+    aspect-ratio: 2/3;
+    object-fit: cover;
+}
+
+.card h4 { margin: 14px 0 6px; color: #fff; }
+.card p { font-size: 0.75rem; color: #aaaaaa; margin: 4px 0; display: flex; align-items: center; justify-content: center; gap: 6px; }
+.card p i { color: #e50914; }
+.card button {
+    background: linear-gradient(135deg, #e50914, #b00710);
+    border: none;
+    padding: 8px 16px;
+    border-radius: 40px;
+    color: white;
+    font-weight: 600;
+    margin-top: 12px;
+    width: 100%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+footer {
+    background: #000000;
+    padding: 30px 20px;
+    text-align: center;
+    margin-top: 50px;
+    color: #888;
+    border-top: 1px solid #1f1f1f;
+}
+
+/* Admin Panel */
+.admin-upload-wrapper { margin: 20px; border-radius: 28px; overflow: hidden; }
+.admin-password-gate { background: #0e0e0e; padding: 30px; border-radius: 28px; border: 1px solid #e50914; text-align: center; }
+.admin-password-gate input { padding: 12px 18px; margin: 10px auto; width: 80%; max-width: 320px; background: #1a1a1a; border: 1px solid #333; border-radius: 50px; color: white; }
+.admin-password-gate button { background: linear-gradient(135deg, #e50914, #b00710); border: none; padding: 12px 32px; border-radius: 50px; color: white; font-weight: bold; cursor: pointer; }
+.admin-upload-panel { background: #0e0e0e; padding: 30px; border-radius: 28px; border: 1px solid #e50914; text-align: center; display: none; }
+.admin-upload-panel input, .admin-upload-panel select { padding: 12px 18px; margin: 10px 0; width: 80%; max-width: 420px; background: #1a1a1a; border: 1px solid #333; border-radius: 50px; color: white; }
+.admin-upload-panel button { background: linear-gradient(135deg, #e50914, #b00710); border: none; padding: 12px 32px; border-radius: 50px; color: white; font-weight: bold; cursor: pointer; margin-top: 15px; }
+
+/* Auth Modal */
+.auth-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.98); z-index: 2000; justify-content: center; align-items: center; backdrop-filter: blur(12px); }
+.auth-container { background: #0f0f0f; border-radius: 32px; max-width: 460px; width: 90%; padding: 40px 32px; text-align: center; border: 1px solid #e50914; position: relative; }
+.auth-container h2 { color: #e50914; }
+.auth-tabs { display: flex; gap: 12px; margin: 30px 0 20px; background: #1a1a1a; padding: 6px; border-radius: 60px; }
+.auth-tab { flex: 1; padding: 12px; border: none; background: transparent; color: #aaa; font-weight: bold; cursor: pointer; border-radius: 50px; }
+.auth-tab.active { background: linear-gradient(135deg, #e50914, #b00710); color: white; }
+.auth-form { display: flex; flex-direction: column; gap: 18px; }
+.auth-form input { background: #1e1e1e; border: 1px solid #333; padding: 14px 18px; border-radius: 50px; color: white; }
+.auth-form button { background: linear-gradient(135deg, #e50914, #b00710); border: none; padding: 14px; border-radius: 50px; color: white; font-weight: bold; cursor: pointer; }
+.close-auth { position: absolute; top: 20px; right: 25px; background: #333; border: none; color: white; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; }
+
+/* Share Modal */
+.share-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.96); z-index: 1000; justify-content: center; align-items: center; }
+.share-content { background: #121212; border-radius: 32px; max-width: 520px; width: 90%; padding: 32px; text-align: center; border: 1px solid #e50914; }
+.share-link-box { background: #1e1e1e; padding: 12px; border-radius: 60px; display: flex; gap: 10px; margin: 20px 0; }
+.share-link-box input { flex: 1; background: #0a0a0a; border: none; padding: 12px; border-radius: 50px; color: white; }
+.social-icons { display: flex; justify-content: center; gap: 16px; margin: 28px 0; flex-wrap: wrap; }
+.social-icon { background: #1e1e1e; padding: 10px 20px; border-radius: 50px; color: white; cursor: pointer; border: none; }
+.social-icon:hover { background: #e50914; }
+
+@media (max-width: 700px) {
+    .movies-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 18px; }
+    .hero { margin: 12px; height: 280px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+    <div class="logo">
+        <div class="logo-icon"><i class="fas fa-photo-film"></i></div>
+        <div><div class="logo-text">AGASOBANUYE</div><div class="logo-sub">PREMIUM STORE</div></div>
+    </div>
+    <nav>
+        <button class="nav-link" id="navHome"><i class="fas fa-home"></i> Home</button>
+        <button class="nav-link" id="navMovies"><i class="fas fa-tv"></i> Movies</button>
+        <button class="nav-link" id="navCategories"><i class="fas fa-th-large"></i> Categories</button>
+        <button class="nav-link" id="navTranslator"><i class="fas fa-microphone"></i> Translator</button>
+        <div id="loginNavBtn"><i class="fas fa-user-circle"></i> Login</div>
+    </nav>
+</header>
+
+<div class="search-box">
+    <i class="fas fa-search"></i>
+    <input type="text" id="search" placeholder="Search movies...">
+</div>
+
+<div class="hero">
+    <button onclick="playFeaturedMovie()"><i class="fas fa-play"></i> Watch Featured Movie</button>
+</div>
+
+<!-- Big Player -->
+<div class="big-player-section" id="bigPlayerSection">
+    <div class="player-header">
+        <h3><i class="fas fa-play-circle"></i> <span id="playerMovieTitle">Now Playing</span></h3>
+        <button class="close-player-btn" onclick="closeBigPlayer()"><i class="fas fa-times"></i> Close</button>
+    </div>
+    <div class="video-container"><video id="mainVideoPlayer" controls playsinline></video></div>
+    <div class="movie-info" id="playerMovieInfo">
+        <p id="playerTranslator"><i class="fas fa-microphone"></i> Translator: --</p>
+        <p id="playerCategory"><i class="fas fa-tag"></i> Category: --</p>
+    </div>
+    <div class="player-actions">
+        <a id="downloadMovieBtn" download style="text-decoration: none;"><button class="action-btn"><i class="fas fa-download"></i> Download</button></a>
+        <button class="action-btn" id="shareMovieBtn"><i class="fas fa-share-alt"></i> Share</button>
+    </div>
+</div>
+
+<!-- HOME PAGE CONTAINER (with sections) -->
+<div id="homeContainer">
+    <div class="home-section">
+        <h2><i class="fas fa-fire"></i> Trending Now</h2>
+        <div class="movies-grid" id="trendingGrid"></div>
+    </div>
+    <div class="home-section">
+        <h2><i class="fas fa-star"></i> Latest Movies</h2>
+        <div class="movies-grid" id="latestGrid"></div>
+    </div>
+    <div class="home-section">
+        <h2><i class="fas fa-clock"></i> Recently Added</h2>
+        <div class="movies-grid" id="recentGrid"></div>
+    </div>
+</div>
+
+<!-- SINGLE PAGE CONTAINER (for Movies/Categories/Translator views) -->
+<div id="singleContainer" style="display: none;">
+    <div class="single-container">
+        <h2 id="singleTitle"><i class="fas fa-tv"></i> All Movies</h2>
+        <div class="movies-grid" id="singleGrid"></div>
+    </div>
+</div>
+
+<!-- Admin Upload Section -->
+<div class="admin-upload-wrapper">
+    <div id="adminPasswordGate" class="admin-password-gate">
+        <h3><i class="fas fa-shield-alt"></i> Admin Access Required</h3>
+        <input type="password" id="adminGatePassword" placeholder="Enter Admin Password">
+        <button onclick="verifyAdminPassword()"><i class="fas fa-unlock-alt"></i> Unlock Admin Panel</button>
+    </div>
+    <div id="adminUploadPanel" class="admin-upload-panel">
+        <h3><i class="fas fa-upload"></i> Admin Upload</h3>
+        <input id="mTitle" placeholder="Movie Title">
+        <input id="mTranslator" placeholder="Translator Name">
+        <input type="file" id="mPoster" accept="image/*">
+        <input id="mThumb" placeholder="Or Thumbnail URL">
+        <input type="file" id="mVideo" accept="video/*">
+        <select id="mCategory">
+            <option>Action</option><option>Drama</option><option>Comedy</option>
+            <option>Romance</option><option>Sci-Fi</option><option>Horror</option><option>Others</option>
+        </select>
+        <button onclick="addMovie()"><i class="fas fa-cloud-upload-alt"></i> Upload Movie</button>
+        <button onclick="lockAdminPanel()" style="background:#333; margin-top:10px;"><i class="fas fa-lock"></i> Lock</button>
+    </div>
+</div>
+
+<!-- Auth Modal -->
+<div id="authModal" class="auth-modal">
+    <div class="auth-container">
+        <button class="close-auth" onclick="closeAuthModal()"><i class="fas fa-times"></i></button>
+        <h2><i class="fas fa-film"></i> Agasobanuye</h2>
+        <div class="auth-tabs">
+            <button class="auth-tab active" onclick="switchAuthTab('login')">Login</button>
+            <button class="auth-tab" onclick="switchAuthTab('signup')">Sign Up</button>
+        </div>
+        <div id="loginForm" class="auth-form">
+            <input type="email" id="loginEmail" placeholder="Email">
+            <input type="password" id="loginPassword" placeholder="Password">
+            <button onclick="handleLogin()"><i class="fas fa-sign-in-alt"></i> Login</button>
+        </div>
+        <div id="signupForm" class="auth-form" style="display: none;">
+            <input type="text" id="signupUsername" placeholder="Username">
+            <input type="email" id="signupEmail" placeholder="Email">
+            <input type="password" id="signupPassword" placeholder="Password">
+            <button onclick="handleSignup()"><i class="fas fa-user-plus"></i> Sign Up</button>
+        </div>
+        <div id="authMessage" class="auth-message"></div>
+    </div>
+</div>
+
+<!-- Share Modal -->
+<div id="shareModal" class="share-modal">
+    <div class="share-content">
+        <h3>Share Movie</h3>
+        <div class="share-link-box"><input id="shareLinkInput" readonly><button onclick="copyShareLink()">Copy</button></div>
+        <div class="social-icons">
+            <button class="social-icon" onclick="shareOnWhatsApp()"><i class="fab fa-whatsapp"></i> WhatsApp</button>
+            <button class="social-icon" onclick="shareOnFacebook()"><i class="fab fa-facebook-f"></i> Facebook</button>
+            <button class="social-icon" onclick="shareOnTwitter()"><i class="fab fa-twitter"></i> Twitter</button>
+            <button class="social-icon" onclick="shareOnTelegram()"><i class="fab fa-telegram-plane"></i> Telegram</button>
+        </div>
+        <button class="close-share" onclick="closeShareModal()">Close</button>
+    </div>
+</div>
+
+<footer><p><i class="fas fa-copyright"></i> 2026 Made by Cesal | Agasobanuye Store</p></footer>
+
+<script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
+<script>
+// ========== DATA ==========
+let movies = [];
+let currentPlayingMovie = null;
+let plyrInstance = null;
+let isAdminPanelUnlocked = false;
+const ADMIN_UPLOAD_PASSWORD = "AgasobanuyeAdmin2026";
+
+// Navigation state
+let currentView = "home"; // home, movies, categories, translator
+let currentCategoryFilter = null;
+let currentTranslatorFilter = null;
+
+// ========== AUTH ==========
+let currentUser = null;
+let users = JSON.parse(localStorage.getItem('agasobanuye_users')) || [];
+if (!users.find(u => u.email === 'admin@agasobanuye.com')) {
+    users.push({ username: 'Administrator', email: 'admin@agasobanuye.com', password: 'admin123' });
+    localStorage.setItem('agasobanuye_users', JSON.stringify(users));
+}
+function saveUsers() { localStorage.setItem('agasobanuye_users', JSON.stringify(users)); }
+function switchAuthTab(tab) {
+    const loginForm = document.getElementById('loginForm');
+    const signupForm = document.getElementById('signupForm');
+    const tabs = document.querySelectorAll('.auth-tab');
+    if (tab === 'login') {
+        loginForm.style.display = 'flex';
+        signupForm.style.display = 'none';
+        tabs[0].classList.add('active');
+        tabs[1].classList.remove('active');
+    } else {
+        loginForm.style.display = 'none';
+        signupForm.style.display = 'flex';
+        tabs[0].classList.remove('active');
+        tabs[1].classList.add('active');
+    }
+}
+function closeAuthModal() { document.getElementById('authModal').style.display = 'none'; }
+function openAuthModal() { document.getElementById('authModal').style.display = 'flex'; switchAuthTab('login'); }
+function handleLogin() {
+    const email = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value.trim();
+    const user = users.find(u => u.email === email && u.password === password);
+    if (user) {
+        currentUser = user;
+        localStorage.setItem('agasobanuye_currentUser', JSON.stringify(currentUser));
+        updateUIForLoggedInUser();
+        closeAuthModal();
+        showToast(`Welcome ${user.username}!`);
+    } else { showAuthMsg('Invalid credentials', true); }
+}
+function handleSignup() {
+    const username = document.getElementById('signupUsername').value.trim();
+    const email = document.getElementById('signupEmail').value.trim();
+    const password = document.getElementById('signupPassword').value.trim();
+    if (!username || !email || !password) { showAuthMsg('All fields required', true); return; }
+    if (users.find(u => u.email === email)) { showAuthMsg('Email exists', true); return; }
+    users.push({ username, email, password });
+    saveUsers();
+    showAuthMsg('Account created! Please login.', false);
+    switchAuthTab('login');
+}
+function showAuthMsg(msg, isErr) { const d = document.getElementById('authMessage'); d.innerHTML = msg; d.style.color = isErr ? '#e50914' : '#4caf50'; setTimeout(() => d.innerHTML = '', 2000); }
+function updateUIForLoggedInUser() {
+    const btn = document.getElementById('loginNavBtn');
+    if (currentUser) {
+        btn.innerHTML = `<div class="user-avatar"><i class="fas fa-user-circle"></i><span>${currentUser.username}</span><button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i></button></div>`;
+        btn.style.background = 'transparent'; btn.style.padding = '0';
+    } else {
+        btn.innerHTML = '<i class="fas fa-user-circle"></i> Login';
+        btn.style.background = 'linear-gradient(135deg, #e50914, #b00710)'; btn.style.padding = '8px 20px';
+    }
+}
+function logout() { currentUser = null; localStorage.removeItem('agasobanuye_currentUser'); updateUIForLoggedInUser(); showToast('Logged out'); }
+const savedUser = localStorage.getItem('agasobanuye_currentUser');
+if (savedUser) { currentUser = JSON.parse(savedUser); updateUIForLoggedInUser(); }
+document.getElementById('loginNavBtn').addEventListener('click', (e) => { if (!currentUser) openAuthModal(); });
+
+// ========== ADMIN GATE ==========
+function verifyAdminPassword() {
+    if (document.getElementById('adminGatePassword').value === ADMIN_UPLOAD_PASSWORD) {
+        isAdminPanelUnlocked = true;
+        document.getElementById('adminPasswordGate').style.display = 'none';
+        document.getElementById('adminUploadPanel').style.display = 'block';
+        showToast('Admin panel unlocked');
+    } else { showToast('Wrong password', true); }
+}
+function lockAdminPanel() { isAdminPanelUnlocked = false; document.getElementById('adminUploadPanel').style.display = 'none'; document.getElementById('adminPasswordGate').style.display = 'block'; showToast('Panel locked'); }
+
+// ========== MOVIE CRUD ==========
+function addMovie() {
+    if (!isAdminPanelUnlocked) { showToast('Unlock admin panel first', true); return; }
+    const file = document.getElementById('mVideo').files[0];
+    if (!file) { showToast('Select video', true); return; }
+    const title = document.getElementById('mTitle').value.trim();
+    if (!title) { showToast('Title required', true); return; }
+    const translator = document.getElementById('mTranslator').value.trim() || 'Unknown';
+    const category = document.getElementById('mCategory').value;
+    let thumb = document.getElementById('mThumb').value.trim();
+    const posterFile = document.getElementById('mPoster').files[0];
+    if (posterFile) thumb = URL.createObjectURL(posterFile);
+    else if (!thumb) thumb = 'https://placehold.co/300x450/1e1e1e/e50914?text=No+Poster';
+    movies.push({ title, thumb, video: URL.createObjectURL(file), category, translator, time: new Date().toLocaleDateString() });
+    refreshAllDisplays();
+    document.getElementById('mTitle').value = ''; document.getElementById('mTranslator').value = ''; document.getElementById('mThumb').value = ''; document.getElementById('mPoster').value = ''; document.getElementById('mVideo').value = '';
+    showToast(`✅ ${title} uploaded`);
+}
+
+// ========== DISPLAY FUNCTIONS ==========
+function renderMovieCard(movie) {
+    const card = document.createElement('div'); card.className = 'card';
+    card.innerHTML = `<img src="${escapeHtml(movie.thumb)}" alt="${escapeHtml(movie.title)}"><h4>${escapeHtml(movie.title)}</h4><p><i class="fas fa-microphone"></i> ${escapeHtml(movie.translator)}</p><p><i class="fas fa-tag"></i> ${escapeHtml(movie.category)}</p><button class="play-btn"><i class="fas fa-play"></i> Watch</button>`;
+    card.querySelector('.play-btn').onclick = () => openBigPlayer(movie);
+    return card;
+}
+
+function refreshAllDisplays() {
+    if (currentView === 'home') {
+        renderHomePage();
+    } else if (currentView === 'movies') {
+        showAllMoviesView();
+    } else if (currentView === 'categories') {
+        showCategoriesView();
+    } else if (currentView === 'translator') {
+        showTranslatorsView();
+    }
+    // Also update search if needed
+    const searchTerm = document.getElementById('search').value.trim();
+    if (searchTerm) performSearch(searchTerm);
+}
+
+function renderHomePage() {
+    const trending = [...movies].slice(0, 8);
+    const latest = [...movies].slice(0, 10);
+    const recent = [...movies].reverse().slice(0, 8);
+    
+    const trendingGrid = document.getElementById('trendingGrid');
+    const latestGrid = document.getElementById('latestGrid');
+    const recentGrid = document.getElementById('recentGrid');
+    
+    trendingGrid.innerHTML = '';
+    latestGrid.innerHTML = '';
+    recentGrid.innerHTML = '';
+    
+    trending.forEach(m => trendingGrid.appendChild(renderMovieCard(m)));
+    latest.forEach(m => latestGrid.appendChild(renderMovieCard(m)));
+    recent.forEach(m => recentGrid.appendChild(renderMovieCard(m)));
+}
+
+function showAllMoviesView() {
+    currentView = 'movies';
+    currentCategoryFilter = null;
+    currentTranslatorFilter = null;
+    document.getElementById('homeContainer').style.display = 'none';
+    document.getElementById('singleContainer').style.display = 'block';
+    document.getElementById('singleTitle').innerHTML = '<i class="fas fa-tv"></i> All Movies';
+    const grid = document.getElementById('singleGrid');
+    grid.innerHTML = '';
+    movies.forEach(m => grid.appendChild(renderMovieCard(m)));
+    updateActiveNav('navMovies');
+}
+
+function showCategoriesView() {
+    currentView = 'categories';
+    document.getElementById('homeContainer').style.display = 'none';
+    document.getElementById('singleContainer').style.display = 'block';
+    document.getElementById('singleTitle').innerHTML = '<i class="fas fa-th-large"></i> Categories';
+    const grid = document.getElementById('singleGrid');
+    grid.innerHTML = '';
+    const categories = [...new Set(movies.map(m => m.category))];
+    if (categories.length === 0) {
+        grid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:50px;">No categories yet</div>';
+        return;
+    }
+    categories.forEach(cat => {
+        const catCard = document.createElement('div'); catCard.className = 'card';
+        catCard.innerHTML = `<img src="https://placehold.co/300x450/1e1e1e/e50914?text=${encodeURIComponent(cat)}" alt="${cat}"><h4>${escapeHtml(cat)}</h4><p><i class="fas fa-tag"></i> Category</p><button class="cat-view-btn"><i class="fas fa-eye"></i> View Movies</button>`;
+        catCard.querySelector('.cat-view-btn').onclick = () => filterByCategory(cat);
+        grid.appendChild(catCard);
+    });
+    updateActiveNav('navCategories');
+}
+
+function filterByCategory(category) {
+    currentView = 'movies';
+    currentCategoryFilter = category;
+    currentTranslatorFilter = null;
+    document.getElementById('homeContainer').style.display = 'none';
+    document.getElementById('singleContainer').style.display = 'block';
+    const filtered = movies.filter(m => m.category === category);
+    document.getElementById('singleTitle').innerHTML = `<i class="fas fa-tag"></i> Category: ${category} (${filtered.length} movies)`;
+    const grid = document.getElementById('singleGrid');
+    grid.innerHTML = '';
+    filtered.forEach(m => grid.appendChild(renderMovieCard(m)));
+}
+
+function showTranslatorsView() {
+    currentView = 'translator';
+    document.getElementById('homeContainer').style.display = 'none';
+    document.getElementById('singleContainer').style.display = 'block';
+    document.getElementById('singleTitle').innerHTML = '<i class="fas fa-microphone"></i> Translators';
+    const grid = document.getElementById('singleGrid');
+    grid.innerHTML = '';
+    const translators = [...new Set(movies.map(m => m.translator))];
+    if (translators.length === 0) {
+        grid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:50px;">No translators yet</div>';
+        return;
+    }
+    translators.forEach(trans => {
+        const transCard = document.createElement('div'); transCard.className = 'card';
+        transCard.innerHTML = `<img src="https://placehold.co/300x450/1e1e1e/e50914?text=${encodeURIComponent(trans)}" alt="${trans}"><h4>${escapeHtml(trans)}</h4><p><i class="fas fa-microphone"></i> Translator</p><button class="trans-view-btn"><i class="fas fa-eye"></i> View Movies</button>`;
+        transCard.querySelector('.trans-view-btn').onclick = () => filterByTranslator(trans);
+        grid.appendChild(transCard);
+    });
+    updateActiveNav('navTranslator');
+}
+
+function filterByTranslator(translator) {
+    currentView = 'movies';
+    currentTranslatorFilter = translator;
+    currentCategoryFilter = null;
+    document.getElementById('homeContainer').style.display = 'none';
+    document.getElementById('singleContainer').style.display = 'block';
+    const filtered = movies.filter(m => m.translator === translator);
+    document.getElementById('singleTitle').innerHTML = `<i class="fas fa-microphone"></i> Translator: ${translator} (${filtered.length} movies)`;
+    const grid = document.getElementById('singleGrid');
+    grid.innerHTML = '';
+    filtered.forEach(m => grid.appendChild(renderMovieCard(m)));
+}
+
+function performSearch(term) {
+    if (!term.trim()) {
+        refreshAllDisplays();
+        return;
+    }
+    const lowerTerm = term.toLowerCase();
+    const results = movies.filter(m => m.title.toLowerCase().includes(lowerTerm) || m.translator.toLowerCase().includes(lowerTerm) || m.category.toLowerCase().includes(lowerTerm));
+    document.getElementById('homeContainer').style.display = 'none';
+    document.getElementById('singleContainer').style.display = 'block';
+    document.getElementById('singleTitle').innerHTML = `<i class="fas fa-search"></i> Search: "${term}" (${results.length} results)`;
+    const grid = document.getElementById('singleGrid');
+    grid.innerHTML = '';
+    results.forEach(m => grid.appendChild(renderMovieCard(m)));
+    currentView = 'search';
+}
+
+function showHome() {
+    currentView = 'home';
+    currentCategoryFilter = null;
+    currentTranslatorFilter = null;
+    document.getElementById('homeContainer').style.display = 'block';
+    document.getElementById('singleContainer').style.display = 'none';
+    renderHomePage();
+    updateActiveNav('navHome');
+    document.getElementById('search').value = '';
+}
+
+function updateActiveNav(activeId) {
+    ['navHome', 'navMovies', 'navCategories', 'navTranslator'].forEach(id => {
+        const btn = document.getElementById(id);
+        if (btn) btn.classList.remove('active');
+    });
+    const activeBtn = document.getElementById(activeId);
+    if (activeBtn) activeBtn.classList.add('active');
+}
+
+// ========== VIDEO PLAYER ==========
+function openBigPlayer(movie) {
+    if (!movie?.video) return;
+    currentPlayingMovie = movie;
+    document.getElementById('bigPlayerSection').style.display = 'block';
+    if (plyrInstance) plyrInstance.destroy();
+    const video = document.getElementById('mainVideoPlayer');
+    video.src = movie.video;
+    video.poster = movie.thumb;
+    plyrInstance = new Plyr(video, { controls: ['play-large','play','progress','current-time','mute','volume','settings','fullscreen','pip'] });
+    document.getElementById('playerMovieTitle').innerText = movie.title;
+    document.getElementById('playerTranslator').innerHTML = `<i class="fas fa-microphone"></i> Translator: ${escapeHtml(movie.translator)}`;
+    document.getElementById('playerCategory').innerHTML = `<i class="fas fa-tag"></i> Category: ${movie.category}`;
+    const downloadBtn = document.getElementById('downloadMovieBtn');
+    downloadBtn.href = movie.video;
+    downloadBtn.download = `${movie.title.replace(/[^a-z0-9]/gi, '_')}.mp4`;
+    document.getElementById('bigPlayerSection').scrollIntoView({ behavior: 'smooth' });
+}
+function closeBigPlayer() { if(plyrInstance) plyrInstance.destroy(); document.getElementById('mainVideoPlayer').src = ''; document.getElementById('bigPlayerSection').style.display = 'none'; }
+function playFeaturedMovie() { if(movies.length) openBigPlayer(movies[0]); else showToast('No movies available', true); }
+function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, m => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;' }[m])); }
+function showToast(msg, isErr=false) { const t=document.createElement('div'); t.innerHTML=`<i class="fas ${isErr?'fa-exclamation-triangle':'fa-check-circle'}"></i> ${msg}`; t.style.cssText='position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:#e50914;color:white;padding:14px 28px;border-radius:50px;z-index:9999;'; if(isErr) t.style.background='#d32f2f'; document.body.appendChild(t); setTimeout(()=>t.remove(),2800); }
+
+// ========== SHARE ==========
+let currentShareMovie = null;
+function openShareModal(m) { currentShareMovie=m; document.getElementById('shareLinkInput').value=window.location.href; document.getElementById('shareModal').style.display='flex'; }
+function closeShareModal() { document.getElementById('shareModal').style.display='none'; }
+function copyShareLink() { const i=document.getElementById('shareLinkInput'); i.select(); document.execCommand('copy'); showToast('Link copied'); }
+function shareOnWhatsApp() { window.open(`https://wa.me/?text=${encodeURIComponent(`Watch "${currentShareMovie?.title}" on Agasobanuye Store!`)}`); }
+function shareOnFacebook() { window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`); }
+function shareOnTwitter() { window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(`Checkout "${currentShareMovie?.title}"`)}`); }
+function shareOnTelegram() { window.open(`https://t.me/share/url?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(`🎬 ${currentShareMovie?.title}`)}`); }
+document.getElementById('shareMovieBtn').addEventListener('click',()=>{ if(currentPlayingMovie) openShareModal(currentPlayingMovie); else showToast('No movie playing',true); });
+
+// ========== SEARCH ==========
+document.getElementById('search').addEventListener('input', (e) => {
+    const term = e.target.value.trim();
+    if (term) {
+        performSearch(term);
+    } else {
+        showHome();
+    }
+});
+
+// ========== NAVIGATION LISTENERS ==========
+document.getElementById('navHome').addEventListener('click', showHome);
+document.getElementById('navMovies').addEventListener('click', () => {
+    currentView = 'movies';
+    showAllMoviesView();
+});
+document.getElementById('navCategories').addEventListener('click', showCategoriesView);
+document.getElementById('navTranslator').addEventListener('click', showTranslatorsView);
+
+// ========== INIT ==========
+movies = [];
+renderHomePage();
+showHome();
+showToast('Welcome! Home page shows Trending, Latest & Recently Added movies.');
+
+// Expose globals
+window.verifyAdminPassword = verifyAdminPassword;
+window.lockAdminPanel = lockAdminPanel;
+window.addMovie = addMovie;
+window.openBigPlayer = openBigPlayer;
+window.closeBigPlayer = closeBigPlayer;
+window.playFeaturedMovie = playFeaturedMovie;
+window.handleLogin = handleLogin;
+window.handleSignup = handleSignup;
+window.switchAuthTab = switchAuthTab;
+window.closeAuthModal = closeAuthModal;
+window.logout = logout;
+window.openShareModal = openShareModal;
+window.closeShareModal = closeShareModal;
+window.copyShareLink = copyShareLink;
+window.shareOnWhatsApp = shareOnWhatsApp;
+window.shareOnFacebook = shareOnFacebook;
+window.shareOnTwitter = shareOnTwitter;
+window.shareOnTelegram = shareOnTelegram;
+window.filterByCategory = filterByCategory;
+window.filterByTranslator = filterByTranslator;
+</script>
+</body>
+</html>
